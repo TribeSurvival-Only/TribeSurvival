@@ -19,7 +19,7 @@
     local WeaponStat = Instance.new("Frame")
         WeaponStat.Parent = player.PlayerGui:FindFirstChild("MainUI")
         WeaponStat.Name = "WeaponStatsFrame"
-        WeaponStat.Position = UDim2.new(0.72, 0, 0.928, 0)
+        WeaponStat.Position = UDim2.new(0.72, -7, 0.928, 0)
         WeaponStat.Size = UDim2.new(0.15, 0, 0.4, 0)
         WeaponStat.BackgroundTransparency = 1
     local WeaponInfo = Instance.new("CanvasGroup")
@@ -332,7 +332,7 @@
         MouseLeaveFrame.BackgroundTransparency = 1
         MouseLeaveFrame.Parent = OpenFrame
     local function showMenu()
-        local targetPosition = UDim2.new(0.72, 0, 0.6, 0)
+        local targetPosition = UDim2.new(0.72, -7, 0.6, 0)
         local tweenInfo = TweenInfo.new(
         0.5,
         Enum.EasingStyle.Quad,
@@ -342,7 +342,7 @@
         tween:Play()
     end
     local function hideMenu()
-        local targetPosition = UDim2.new(0.72, 0, 0.928, 0)
+        local targetPosition = UDim2.new(0.72, -7, 0.928, 0)
         local tweenInfo = TweenInfo.new(
         0.35,
         Enum.EasingStyle.Quad,
