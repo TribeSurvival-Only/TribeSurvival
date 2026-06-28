@@ -1,265 +1,375 @@
 -- You can execute loadstring(game:HttpGet("https://raw.githubusercontent.com/TribeSurvival-Only/TribeSurvival/refs/heads/main/WeaponUpgraderInformation(Mod%20for%20Tribe%20Survival%20Roblox)"))()
 -- workspace
-  local workspace = game.Workspace
-  local players = game.Players
-  local player = players.LocalPlayer
-  local character = player.Character or player.CharacterAdded:Wait()
-  local UIStroke = player.PlayerGui.GameUI.HoverShow.Age.Age.UIStroke
-  local TextColor = Color3.new(255/255, 255/255, 255/255)
-  local WeaponStat = player.PlayerGui.MainUI:FindFirstChild("WeaponStatsFrame")
+-- Created 28.06.2026 Moskow Time ~01:20-04.30
+-- (Update 0.01 28.06.2026) Moskow Time 21:13-23:32
+-- Added closing - opening the menu
+-- Redesigned the weapon display function, now the first and second weapons are displayed in different parts
+    local workspace = game.Workspace
+    local players = game.Players
+    local player = players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local UIStroke = player.PlayerGui.GameUI.HoverShow.Age.Age.UIStroke
+    local TextColor = Color3.new(255/255, 255/255, 255/255)
+    local WeaponStat = player.PlayerGui.MainUI:FindFirstChild("WeaponStatsFrame")
 -- if you execute that 2 times
-  if WeaponStat then
-  WeaponStat:Destroy()
-  end
--- idk what type here, just codding
-  local WeaponStat = Instance.new("Frame")
-      WeaponStat.Parent = player.PlayerGui:FindFirstChild("MainUI")
-      WeaponStat.Name = "WeaponStatsFrame"
-      WeaponStat.Position = UDim2.new(0.72, 0, 0.8, 0)
-      WeaponStat.Size = UDim2.new(0.15, 0, 0.2, 0)
-      WeaponStat.BackgroundTransparency = 1
-  local WeaponInfo = Instance.new("CanvasGroup")
-      WeaponInfo.Parent = WeaponStat
-      WeaponInfo.Name = "WeaponInfo"
-      WeaponInfo.Size = UDim2.new(1, 0, 1, 0)
-      WeaponInfo.BackgroundTransparency = 1
-      local UIList = player.PlayerGui.GameUI.HoverShow.Age.UIListLayout:Clone()
-          local UIPadding = player.PlayerGui.GameUI.HoverShow.Age.UIPadding:Clone()
-              UIList.VerticalAlignment = "Top"
-              UIList.Parent = WeaponInfo
-              UIPadding.Parent = WeaponInfo
-  local WN = Instance.new("TextLabel")
-      WN.Name = "WeaponName"
-      WN.Parent = WeaponInfo
-      WN.Text = "If you see that its error"
-      WN.TextSize = 12
-      WN.TextColor3 = TextColor
-      WN.Size = UDim2.new(1, 0, 0.2, 0)
-      WN.BackgroundTransparency = 1
-      local NameUIStroke = UIStroke:Clone()
-          NameUIStroke.Parent = WN
-  local HD = Instance.new("TextLabel")
-      HD.Name = "DamageTo"
-      HD.TextColor3 = Color3.new(170/255, 0/255, 0/255)
-      HD.TextSize = 12
-      HD.Text = "damage to"
-      HD.Parent = WeaponInfo
-      HD.Size = UDim2.new(1, 0, 0.1, 0)
-      HD.BackgroundTransparency = 1
-      HD.LayoutOrder = 1
-      local HDUIStroke = UIStroke:Clone()
-          HDUIStroke.Parent = HD
-  local ME = Instance.new("TextLabel")
-      ME.Name = "MeteorEnchant"
-      ME.TextColor3 = Color3.new(170/255, 0/255, 255/255)
-      ME.TextSize = 12
-      ME.Text = "Meteor"
-      ME.Parent = WeaponInfo
-      ME.Size = UDim2.new(1, 0, 0.1, 0)
-      ME.BackgroundTransparency = 1
-      ME.LayoutOrder = 2
-      ME.Visible = false
-      local MEUIStroke = UIStroke:Clone()
-          MEUIStroke.Parent = ME
-  local B = Instance.new("TextLabel")
-      B.Name = "BloodlustEnchant"
-      B.TextColor3 = Color3.new(255/255, 0/255, 0/255)
-      B.TextSize = 12
-      B.Text = "BloodLust"
-      B.Parent = WeaponInfo
-      B.Size = UDim2.new(1, 0, 0.1, 0)
-      B.BackgroundTransparency = 1
-      B.LayoutOrder = 3
-      B.Visible = false
-      local BUIStroke = UIStroke:Clone()
-          BUIStroke.Parent = B
-  local D = Instance.new("TextLabel")
-      D.Name = "DrainingEnchant"
-      D.TextColor3 = Color3.new(85/255, 0/255, 255/255)
-      D.TextSize = 12
-      D.Text = "Draining"
-      D.Parent = WeaponInfo
-      D.Size = UDim2.new(1, 0, 0.1, 0)
-      D.BackgroundTransparency = 1
-      D.LayoutOrder = 4
-      D.Visible = false
-      local DUIStroke = UIStroke:Clone()
-          DUIStroke.Parent = D
-  local F = Instance.new("TextLabel")
-      F.Name = "FrostEnchant"
-      F.TextColor3 = Color3.new(0/255, 170/255, 255/255)
-      F.TextSize = 12
-      F.Text = "Frost"
-      F.Parent = WeaponInfo
-      F.Size = UDim2.new(1, 0, 0.1, 0)
-      F.BackgroundTransparency = 1
-      F.LayoutOrder = 5
-      F.Visible = false
-      local FUIStroke = UIStroke:Clone()
-          FUIStroke.Parent = F
-  local S = Instance.new("TextLabel")
-      S.Name = "SearingEnchant"
-      S.TextColor3 = Color3.new(255/255, 85/255, 0/255)
-      S.TextSize = 12
-      S.Text = "Searing"
-      S.Parent = WeaponInfo
-      S.Size = UDim2.new(1, 0, 0.1, 0)
-      S.BackgroundTransparency = 1
-      S.LayoutOrder = 6
-      S.Visible = false
-      local SUIStroke = UIStroke:Clone()
-          SUIStroke.Parent = S
-  -- shhh
-    local function imlazy()
-        WN.TextTransparency = 0
-        NameUIStroke.Transparency = 0
-        HD.TextTransparency = 0
-        HDUIStroke.Transparency = 0
+    if WeaponStat then
+    WeaponStat:Destroy()
     end
--- Info-Tool function
-  local function toolfunction()
-      for _, tool in pairs(character:GetChildren()) do
-          local checktool = tool:GetAttribute("Tool")
-          if checktool then
-              local function contains(tbl, val)
-                  for _, v in ipairs(tbl) do
-                      if v == val then
-                          return true
-                      end
-                  end
-              return false
-              end
-              local Meleetools = {"Katana", "Great Hammer", "Wirecutters", "Decapitator", "Lance", "Sickles", "Bat", "War Club", "Scythe", "Wrench", "Mallet", "Hammer", "Shovel", "Axe", "Stick", "Sword", "GreatAxe", "Spear", "Daggers", "Club", "Polearm"}
-              local Rangedtools = {"Bow", "Molotov",  "Blowgun", "Wooden Shield", "Crossbow", "Musket", "Trident"}
-              if contains(Meleetools, tool.Name) then
-                  ME.Visible = tool:GetAttribute("MeteorEnchant") or false
-                  B.Visible = tool:GetAttribute("BloodlustEnchant") or false
-                  D.Visible = tool:GetAttribute("DrainingEnchant") or false
-                  F.Visible = tool:GetAttribute("FrostEnchant") or false
-                  S.Visible = tool:GetAttribute("SearingEnchant") or false
-                  HD.TextColor3 = Color3.new(1, 1, 1)
-                  WN.Text = tool.Name
-                  HD.Text = "damage to"
-                  HD.TextSize = 12
-                  local stats = "material"
-                  local gold = 5000
-                  local diamond = 12500
-                  local ruby = 25000
-                  local emerald = 62500
-                  local currentHD = tool:GetAttribute("HitDamage")
-                  imlazy()
-                  if not currentHD then
-                      HD.Text = "You need to do damage"
-                      HD.TextColor3 = Color3.new(1, 1, 1)
-                  else
-                      local damage = tonumber(currentHD)
-                      if damage < gold then
-                          stats = "gold"
-                          HD.Text = (gold - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(255/255, 255/255, 0/255)
-                          HD.TextSize = 12
-                      elseif damage < diamond then
-                          stats = "diamond"
-                          HD.Text = (diamond - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(85/255, 255/255, 255/255)
-                          HD.TextSize = 12
-                      elseif damage < ruby then
-                          stats = "ruby"
-                          HD.Text = (ruby - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(255/255, 0/255, 0/255)
-                          HD.TextSize = 12
-                      elseif damage < emerald then
-                          stats = "emerald"
-                          HD.Text = (emerald - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(0/255, 255/255, 0/255)
-                          HD.TextSize = 12
-                      else
-                          HD.Text = "Max"
-                          HD.TextColor3 = Color3.new(0/255, 170/255, 0/255)
-                          HD.TextSize = 16
-                      end
-                  end
-              elseif contains(Rangedtools, tool.Name) then
-                  ME.Visible = tool:GetAttribute("MeteorEnchant") or false
-                  B.Visible = tool:GetAttribute("BloodlustEnchant") or false
-                  D.Visible = tool:GetAttribute("DrainingEnchant") or false
-                  F.Visible = tool:GetAttribute("FrostEnchant") or false
-                  S.Visible = tool:GetAttribute("SearingEnchant") or false
-                  WN.Text = tool.Name
-                  HD.Text = "damage to"
-                  HD.TextSize = 12
-                  local stats = "material"
-                  local gold = 1000
-                  local diamond = 2500
-                  local ruby = 5000
-                  local emerald = 12500
-                  local currentHD = tool:GetAttribute("HitDamage")
-                  imlazy()
-                  if not currentHD then
-                      HD.Text = "You need to do damage"
-                  else
-                      local damage = tonumber(currentHD)
-                      if damage < gold then
-                          stats = "gold"
-                          HD.Text = (gold - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(255/255, 255/255, 0/255)
-                          HD.TextSize = 12
-                      elseif damage < diamond then
-                          stats = "diamond"
-                          HD.Text = (diamond - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(85/255, 255/255, 255/255)
-                          HD.TextSize = 12
-                      elseif damage < ruby then
-                          stats = "ruby"
-                          HD.Text = (ruby - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(255/255, 0/255, 0/255)
-                          HD.TextSize = 12
-                      elseif damage < emerald then
-                          stats = "emerald"
-                          HD.Text = (emerald - damage) .. " damage to " .. stats
-                          HD.TextColor3 = Color3.new(0/255, 255/255, 0/255)
-                          HD.TextSize = 12
-                      else
-                          HD.Text = "Max"
-                          HD.TextColor3 = Color3.new(0/255, 170/255, 0/255)
-                          HD.TextSize = 16
-                      end
-                  end
-              end
-  
-              
-          else
-              if tool.Name == "Mysterious Potion" then
-                  imlazy()
-                  WN.Text = tool.Name
-                  HD.Text = "Did you want to see something here?"
-                  HD.TextColor3 = Color3.new(1, 1, 1)
-              else
-                  ME.Visible = false
-                  B.Visible = false
-                  D.Visible = false
-                  F.Visible = false
-                  S.Visible = false
-                  WN.Text = "Its not Weapon"
-                  WN.TextTransparency = 0.75
-                  NameUIStroke.Transparency = 0.75
-                  HD.TextTransparency = 1
-                  HDUIStroke.Transparency = 1
-              end
-          end
-          
-      end
-  end
+-- idk what type here, just codding
+    local WeaponStat = Instance.new("Frame")
+        WeaponStat.Parent = player.PlayerGui:FindFirstChild("MainUI")
+        WeaponStat.Name = "WeaponStatsFrame"
+        WeaponStat.Position = UDim2.new(0.72, 0, 0.928, 0)
+        WeaponStat.Size = UDim2.new(0.15, 0, 0.4, 0)
+        WeaponStat.BackgroundTransparency = 1
+    local WeaponInfo = Instance.new("CanvasGroup")
+        WeaponInfo.Parent = WeaponStat
+        WeaponInfo.Name = "FirstWeaponInfo"
+        WeaponInfo.Size = UDim2.new(1, 0, 0.4, 0)
+        WeaponInfo.BackgroundTransparency = 0.8
+        WeaponInfo.BackgroundColor3 = Color3.new(1, 1, 1)
+        WeaponInfo.BorderColor3 = Color3.new(0, 0, 0)
+        WeaponInfo.BorderSizePixel = 5
+        WeaponInfo.Position = UDim2.new(0, 0, 0.18, 0)
+        local UIList = player.PlayerGui.GameUI.HoverShow.Age.UIListLayout:Clone()
+            local UIPadding = player.PlayerGui.GameUI.HoverShow.Age.UIPadding:Clone()
+                UIList.VerticalAlignment = "Top"
+                UIList.Padding = UDim.new(0, 4)
+                UIList.Parent = WeaponInfo
+                UIPadding.Parent = WeaponInfo
+    local WN = Instance.new("TextLabel")
+        WN.Name = "WeaponName"
+        WN.Parent = WeaponInfo
+        WN.Text = "If you see that its error"
+        WN.TextSize = 16
+        WN.TextColor3 = TextColor
+        WN.Size = UDim2.new(1, 0, 0.16, 0)
+        WN.BackgroundTransparency = 0.8
+        WN.BackgroundColor3 = Color3.new(0, 0, 0)
+        local NameUIStroke = UIStroke:Clone()
+            NameUIStroke.Parent = WN
+    local HD = Instance.new("TextLabel")
+        HD.Name = "DamageTo"
+        HD.TextColor3 = Color3.new(170/255, 0/255, 0/255)
+        HD.TextSize = 14
+        HD.Text = "damage to"
+        HD.Parent = WeaponInfo
+        HD.Size = UDim2.new(1, 0, 0.13, 0)
+        HD.BackgroundTransparency = 0.85
+        HD.LayoutOrder = 1
+        local HDUIStroke = UIStroke:Clone()
+            HDUIStroke.Parent = HD
+    local ME = Instance.new("TextLabel")
+        ME.Name = "MeteorEnchant"
+        ME.TextColor3 = Color3.new(170/255, 0/255, 255/255)
+        ME.TextSize = 14
+        ME.Text = "Meteor"
+        ME.Parent = WeaponInfo
+        ME.Size = UDim2.new(1, 0, 0.11, 0)
+        ME.BackgroundTransparency = 0.85
+        ME.BackgroundColor3 = Color3.new(170/255, 0/255, 0/255)
+        ME.LayoutOrder = 2
+        ME.Visible = false
+        local MEUIStroke = UIStroke:Clone()
+            MEUIStroke.Parent = ME
+    local B = Instance.new("TextLabel")
+        B.Name = "BloodlustEnchant"
+        B.TextColor3 = Color3.new(255/255, 0/255, 0/255)
+        B.TextSize = 14
+        B.Text = "BloodLust"
+        B.Parent = WeaponInfo
+        B.Size = UDim2.new(1, 0, 0.11, 0)
+        B.BackgroundTransparency = 0.85
+        B.BackgroundColor3 = Color3.new(255/255, 0/255, 0/255)
+        B.LayoutOrder = 3
+        B.Visible = false
+        local BUIStroke = UIStroke:Clone()
+            BUIStroke.Parent = B
+    local D = Instance.new("TextLabel")
+        D.Name = "DrainingEnchant"
+        D.TextColor3 = Color3.new(85/255, 0/255, 255/255)
+        D.TextSize = 14
+        D.Text = "Draining"
+        D.Parent = WeaponInfo
+        D.Size = UDim2.new(1, 0, 0.11, 0)
+        D.BackgroundTransparency = 0.85
+        D.BackgroundColor3 = Color3.new(85/255, 0/255, 255/255)
+        D.LayoutOrder = 4
+        D.Visible = false
+        local DUIStroke = UIStroke:Clone()
+            DUIStroke.Parent = D
+    local F = Instance.new("TextLabel")
+        F.Name = "FrostEnchant"
+        F.TextColor3 = Color3.new(0/255, 170/255, 255/255)
+        F.TextSize = 14
+        F.Text = "Frost"
+        F.Parent = WeaponInfo
+        F.Size = UDim2.new(1, 0, 0.11, 0)
+        F.BackgroundTransparency = 0.85
+        F.BackgroundColor3 = Color3.new(0/255, 170/255, 255/255)
+        F.LayoutOrder = 5
+        F.Visible = false
+        local FUIStroke = UIStroke:Clone()
+            FUIStroke.Parent = F
+    local S = Instance.new("TextLabel")
+        S.Name = "SearingEnchant"
+        S.TextColor3 = Color3.new(255/255, 85/255, 0/255)
+        S.TextSize = 14
+        S.Text = "Searing"
+        S.Parent = WeaponInfo
+        S.Size = UDim2.new(1, 0, 0.11, 0)
+        S.BackgroundTransparency = 0.85
+        S.BackgroundColor3 = Color3.new(255/255, 85/255, 0/255)
+        S.LayoutOrder = 6
+        S.Visible = false
+        local SUIStroke = UIStroke:Clone()
+            SUIStroke.Parent = S
+-- SecondWeaponInfo
+    local SWI = WeaponInfo:Clone()
+    SWI.Parent = WeaponStat
+    SWI.Position = UDim2.new(0, 0, 0.59, 0)
+    SWI.Name = "SecondWeaponInfo"
+    -- Second decails
+        local SWN = SWI:FindFirstChild("WeaponName")
+        local SHD = SWI:FindFirstChild("DamageTo")
+        local SME = SWI:FindFirstChild("MeteorEnchant")
+        local SB = SWI:FindFirstChild("BloodlustEnchant")
+        local SD = SWI:FindFirstChild("DrainingEnchant")
+        local SF = SWI:FindFirstChild("FrostEnchant")
+        local SS = SWI:FindFirstChild("SearingEnchant")
+-- FirstInfo-Tool function
+    local function Ftoolfunction()
+        for _, tool in pairs(character:GetChildren()) do
+            local checktool = tool:GetAttribute("Tool")
+            if checktool then
+                local function contains(tbl, val)
+                    for _, v in ipairs(tbl) do
+                        if v == val then
+                            return true
+                        end
+                    end
+                return false
+                end
+                local Firsttools = {"Katana", "Decapitator", "Lance", "Sickles", "Bat", "War Club", "Scythe", "Axe", "Stick", "Sword", "GreatAxe", "Spear", "Daggers", "Club", "Polearm"}
+                if contains(Firsttools, tool.Name) then
+                    ME.Visible = tool:GetAttribute("MeteorEnchant") or false
+                    B.Visible = tool:GetAttribute("BloodlustEnchant") or false
+                    D.Visible = tool:GetAttribute("DrainingEnchant") or false
+                    F.Visible = tool:GetAttribute("FrostEnchant") or false
+                    S.Visible = tool:GetAttribute("SearingEnchant") or false
+                    WN.Text = tool.Name
+                    HD.Text = "damage to"
+                    HD.TextSize = 14
+                    local stats = "material"
+                    local gold = 5000
+                    local diamond = 12500
+                    local ruby = 25000
+                    local emerald = 62500
+                    local currentHD = tool:GetAttribute("HitDamage")
+                    if not currentHD then                        
+                        HD.Text = "You need to do damage"
+                        HD.TextColor3 = Color3.new(1, 1, 1)
+                    else
+            local damage = tonumber(currentHD)
+            if damage < gold then
+                stats = "gold"
+                HD.Text = math.floor((gold - damage)) .. " damage to " .. stats
+                HD.TextColor3 = Color3.new(255/255, 255/255, 0/255)
+                HD.TextSize = 14
+            elseif damage < diamond then
+                stats = "diamond"
+                HD.Text = math.floor((diamond - damage)) .. " damage to " .. stats
+                HD.TextColor3 = Color3.new(85/255, 255/255, 255/255)
+                HD.TextSize = 14
+            elseif damage < ruby then
+                stats = "ruby"
+                HD.Text = math.floor((ruby - damage)) .. " damage to " .. stats
+                HD.TextColor3 = Color3.new(255/255, 0/255, 0/255)
+                HD.TextSize = 14
+            elseif damage < emerald then
+                stats = "emerald"
+                HD.Text = math.floor((emerald - damage)) .. " damage to " .. stats
+                HD.TextColor3 = Color3.new(0/255, 255/255, 0/255)
+                HD.TextSize = 14
+            else
+                HD.Text = "Max"
+                HD.TextColor3 = Color3.new(0/255, 170/255, 0/255)
+                HD.TextSize = 16
+            end
+        end
+                end
+            end
+        end
+    end
+-- SInfo-Tool function
+    local function Stoolfunction()
+        for _, Stool in pairs(player.Backpack:GetChildren()) do
+            local checktool = Stool:GetAttribute("Tool")
+            if checktool then
+                local function contains(tbl, val)
+                    for _, v in ipairs(tbl) do
+                         if v == val then
+                             return true
+                        end
+                    end
+                return false
+                end
+                local Secondtools = {"Bow", "Wirecutters", "Great Hammer", "Molotov",  "Blowgun", "Wooden Shield", "Crossbow", "Musket", "Trident", "Wrench", "Mallet", "Shovel", "Hammer"}
+                if contains(Secondtools, Stool.Name) then
+                    SME.Visible = Stool:GetAttribute("MeteorEnchant") or false
+                    SB.Visible = Stool:GetAttribute("BloodlustEnchant") or false
+                    SD.Visible = Stool:GetAttribute("DrainingEnchant") or false
+                    SF.Visible = Stool:GetAttribute("FrostEnchant") or false
+                    SS.Visible = Stool:GetAttribute("SearingEnchant") or false
+                    SWN.Text = Stool.Name
+                    SHD.TextColor3 = Color3.new(1, 1, 1)
+                    SHD.Text = "damage to"
+                    SHD.TextSize = 14
+                    -- Second Weapon is a melee
+                        if Stool:GetAttribute("Melee") then
+                            local stats = "material"
+                            local gold = 5000
+                            local diamond = 12500
+                            local ruby = 25000
+                            local emerald = 62500
+                            local ScurrentHD = Stool:GetAttribute("HitDamage")
+                            if not ScurrentHD then                        
+                                SHD.Text = "You need to do damage"
+                                SHD.TextColor3 = Color3.new(1, 1, 1)
+                            else
+                                local damage = tonumber(ScurrentHD)
+                                if damage < gold then
+                                    stats = "gold"
+                                    SHD.Text = ((gold - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(255/255, 255/255, 0/255)
+                                    SHD.TextSize = 14
+                                elseif damage < diamond then
+                                    stats = "diamond"
+                                    SHD.Text = ((diamond - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(85/255, 255/255, 255/255)
+                                    SHD.TextSize = 14
+                                elseif damage < ruby then
+                                    stats = "ruby"
+                                    SHD.Text = ((ruby - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(255/255, 0/255, 0/255)
+                                    SHD.TextSize = 14
+                                elseif damage < emerald then
+                                    stats = "emerald"
+                                    SHD.Text = math.floor((emerald - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(0/255, 255/255, 0/255)
+                                    SHD.TextSize = 14
+                                else
+                                    SHD.Text = "Max"
+                                    SHD.TextColor3 = Color3.new(0/255, 170/255, 0/255)
+                                    SHD.TextSize = 16
+                                end
+                            end
+                    -- Second Weapon is a Ranged
+                        elseif Stool:GetAttribute("Ranged") or Stool.Name == "Wooden Shield" then
+                            local stats = "material"
+                            local gold = 1000
+                            local diamond = 2500
+                            local ruby = 5000
+                            local emerald = 12500
+                            local ScurrentHD = Stool:GetAttribute("HitDamage")
+                            if not ScurrentHD then                        
+                                SHD.Text = "You need to do damage"
+                                SHD.TextColor3 = Color3.new(1, 1, 1)
+                            else
+                                local damage = tonumber(ScurrentHD)
+                                if damage < gold then
+                                    stats = "gold"
+                                    SHD.Text = math.floor((gold - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(255/255, 255/255, 0/255)
+                                    SHD.TextSize = 14
+                                elseif damage < diamond then
+                                    stats = "diamond"
+                                    SHD.Text = math.floor((diamond - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(85/255, 255/255, 255/255)
+                                    SHD.TextSize = 14
+                                elseif damage < ruby then
+                                    stats = "ruby"
+                                    SHD.Text = math.floor((ruby - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(255/255, 0/255, 0/255)
+                                    SHD.TextSize = 14
+                                elseif damage < emerald then
+                                    stats = "emerald"
+                                    SHD.Text = math.floor((emerald - damage)) .. " damage to " .. stats
+                                    SHD.TextColor3 = Color3.new(0/255, 255/255, 0/255)
+                                    SHD.TextSize = 14
+                                else
+                                    SHD.Text = "Max"
+                                    SHD.TextColor3 = Color3.new(0/255, 170/255, 0/255)
+                                    SHD.TextSize = 16
+                                end
+                            end
+                        end
+                end
+            else
+                if Stool.Name == "Mysterious Potion" then
+                    SWN.Text = Stool.Name
+                    SHD.Text = "Did you want to see something here?"
+                    SHD.TextColor3 = Color3.new(1, 1, 1)
+                end
+            end
+        end
+    end
+-- Close/Open
+    local TweenService = game:GetService("TweenService")
+    local isMenuOpen = false
+    local WeaponStat = player.PlayerGui.MainUI.WeaponStatsFrame
+    local OpenFrame = Instance.new("Frame")
+    OpenFrame.Size = UDim2.new(1, 0, 0.18, 0)
+    OpenFrame.Position = UDim2.new(0, 0, 0, -5)
+    OpenFrame.BackgroundTransparency = 0.8
+    OpenFrame.BackgroundColor3 = Color3.new(0/255, 0/255, 127/255)
+    OpenFrame.BorderSizePixel = 5
+    OpenFrame.BorderColor3 = Color3.new(0, 0, 0)
+    OpenFrame.Parent = WeaponStat
+        local MouseLeaveFrame = Instance.new("Frame")
+        MouseLeaveFrame.Size = UDim2.new(1.4, 0, 7, 0)
+        MouseLeaveFrame.Position = UDim2.new(-0.2, 0, -0.4, 0)
+        MouseLeaveFrame.BackgroundTransparency = 1
+        MouseLeaveFrame.Parent = OpenFrame
+    local function showMenu()
+        local targetPosition = UDim2.new(0.72, 0, 0.6, 0)
+        local tweenInfo = TweenInfo.new(
+        0.5,
+        Enum.EasingStyle.Quad,
+        Enum.EasingDirection.Out
+        )
+        local tween = TweenService:Create(WeaponStat, tweenInfo, {Position = targetPosition})
+        tween:Play()
+    end
+    local function hideMenu()
+        local targetPosition = UDim2.new(0.72, 0, 0.928, 0)
+        local tweenInfo = TweenInfo.new(
+        0.35,
+        Enum.EasingStyle.Quad,
+        Enum.EasingDirection.Out
+        )
+        local tween = TweenService:Create(WeaponStat, tweenInfo, {Position = targetPosition})
+        tween:Play()
+    end
+    OpenFrame.MouseEnter:Connect(function()
+        showMenu()
+        isMenuOpen = true
+    end)
+    MouseLeaveFrame.MouseLeave:Connect(function()
+        hideMenu()
+        isMenuOpen = false
+    end)
 -- Updating Information
-  while true do
-      if character and character.Parent then
-          toolfunction()
-      else
-          repeat
-              wait(0.5)
-              character = player.Character or player.CharacterAdded:Wait()
-          until character and character.Parent
-      end
-      wait(0.1)
-  end
+    while true do
+        if character and character.Parent then
+            Ftoolfunction()
+            Stoolfunction()
+        else
+            repeat
+                wait(0.5)
+                character = player.Character or player.CharacterAdded:Wait()
+            until character and character.Parent
+        end
+        wait(0.1)
+    end
 -- The end
