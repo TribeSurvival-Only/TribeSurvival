@@ -1,4 +1,4 @@
--- You can execute 
+-- You can execute loadstring(game:HttpGet("https://raw.githubusercontent.com/TribeSurvival-Only/TribeSurvival/refs/heads/main/WeaponUpgraderInformation(Mod%20for%20Tribe%20Survival%20Roblox)"))()
 -- workspace
   local workspace = game.Workspace
   local players = game.Players
