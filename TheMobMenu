@@ -1,0 +1,226 @@
+-- workspace
+  local Player = game.Players.LocalPlayer
+  local CratesGui = Player.PlayerGui.MainUI.Crates
+  local Clone = Player.PlayerGui.MainUI:FindFirstChild("SpawnMobMenu")
+-- if you execute 2 times
+  if Clone then
+      Clone:Destroy()
+  end
+-- im really a bit lazy... (Menu)
+  local CloneButton = Player.PlayerGui.MainUI.RightButtons:FindFirstChild("SpawnMobButton")
+  if CloneButton then
+      CloneButton:Destroy()
+  end
+  local Clone = CratesGui:Clone()
+  Clone.Name = "SpawnMobMenu"
+  Clone.Parent = Player.PlayerGui.MainUI
+  local SpawnMobMenu = Clone
+  SpawnMobMenu.Position = UDim2.new(0.5, 0, -0.5, 5)
+  local Content = SpawnMobMenu.Content
+  Content:Destroy()
+  local SMMTitleText = SpawnMobMenu.Header:FindFirstChild("TitleText")
+  SMMTitleText.Text = "SpawnMob commander"
+  local Header = SpawnMobMenu:FindFirstChild("Header")
+  Header.ImageTransparency = 0.25
+  local Background = SpawnMobMenu.Background
+  Background.Size = UDim2.new(1, 0, 0.85, 0)
+  Background.Transparency = 1
+  Background.ImageTransparency = 0.6
+  local TweenService = game:GetService("TweenService")
+  local CloseButton = SpawnMobMenu.Close.ImageButton
+  local endClosePosition = UDim2.new(0.5, 0, 1.3, 5)
+  local endOpenPosition = UDim2.new(0.5, 0, 0.45, 5)
+  local MenuVisible = false
+-- Menu play open and close
+  local function MenuActivable()
+      if not MenuVisible then
+          MenuVisible = true
+          SpawnMobMenu.Position = UDim2.new(0.5, 0, -0.5, 5)
+          SpawnMobMenu.Visible = true
+          local tweenInfo = TweenInfo.new(
+              0.35,
+              Enum.EasingStyle.Quad,
+              Enum.EasingDirection.Out
+          )
+          local tween = TweenService:Create(SpawnMobMenu, tweenInfo, {Position = endOpenPosition})
+          tween:Play()
+      else
+          MenuVisible = false
+          local tweenInfo = TweenInfo.new(
+              0.35,
+              Enum.EasingStyle.Quad,
+              Enum.EasingDirection.Out
+          )
+          local tween = TweenService:Create(SpawnMobMenu, tweenInfo, {Position = endClosePosition})
+          tween:Play()
+          tween.Completed:Connect(function()
+              SpawnMobMenu.Visible = false
+          end)
+      end
+  end
+  CloseButton.MouseButton1Click:Connect(MenuActivable)
+-- Right button
+  local CratesButton = Player.PlayerGui.MainUI.RightButtons.Crates
+  local SpawnMobButton = CratesButton:Clone()
+  local SMIcon = SpawnMobButton:FindFirstChild("Icon")
+  local SMText = SpawnMobButton:FindFirstChild("TextLabel")
+  local SMTextUIStroke = SMText:FindFirstChild("UIStroke")
+  SMIcon.Image = "http://www.roblox.com/asset/?id=11322093465"
+  SpawnMobButton.Name = "SpawnMobButton"
+  SpawnMobButton.Parent = Player.PlayerGui.MainUI.RightButtons
+  SpawnMobButton.Image = "rbxassetid://76705182704342"
+  SpawnMobButton.LayoutOrder = -1
+  SMText.Text = "SpawnMob cmd"
+  SMText.Size = UDim2.new(1, 0, 0.4, 0)
+  SMText.Position = UDim2.new(0, 0, 0.75, 0)
+  SMTextUIStroke.Color = Color3.new(0/255, 0/255, 0/255)
+  SpawnMobButton.MouseButton1Click:Connect(MenuActivable)
+-- Bosses&Minibosses and Default mobs
+  local categories = {
+      ["Default"] = {},
+      ["Boss&Miniboss"] = {}
+  }
+  local mobsFolder = game:GetService("ReplicatedStorage"):WaitForChild("Mobs")
+  for _, model in ipairs(mobsFolder:GetChildren()) do
+      if model:IsA("Model") then
+          local isBoss = false
+          local successBoss, valueBoss = pcall(function() return model:GetAttribute("Boss") end)
+          if successBoss then
+              isBoss = valueBoss
+          end
+          print("Model:", model.Name, "Boss:", isBoss)
+          if isBoss then
+              table.insert(categories["Boss&Miniboss"], model)
+          else
+              table.insert(categories["Default"], model)
+          end
+      end
+  end
+  local containerNames = {"Default", "Boss&Miniboss"}
+  local scrollFrames = {}
+  local startY = 70 
+  for i, categoryName in ipairs(containerNames) do
+      local title = Instance.new("TextLabel")
+      title.Size = UDim2.new(1, -20, 0, 20)
+      title.Position = UDim2.new(0, 10, 0, startY + (i - 1) * 140)
+      title.Text = categoryName
+      title.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+      title.TextColor3 = Color3.new(1, 1, 1)
+      title.Parent = SpawnMobMenu
+      local stroke = Instance.new("UIStroke")
+      stroke.Color = Color3.new(0, 0, 0)
+      stroke.Thickness = 2
+      stroke.Parent = title
+      local scrollFrame = Instance.new("ScrollingFrame")
+      scrollFrame.Size = UDim2.new(1, -20, 0, 100)
+      scrollFrame.Position = UDim2.new(0, 9, 0, startY + (i - 1) * 140 + 20)
+      scrollFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+      scrollFrame.BorderSizePixel = 0
+      scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+      scrollFrame.Parent = SpawnMobMenu
+      scrollFrame.Transparency = 1
+      local UIGridLayout = Instance.new("UIGridLayout")
+      UIGridLayout.CellSize = UDim2.new(0, 85, 0, 30)
+      UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+      UIGridLayout.Parent = scrollFrame
+      local scrollStroke = Instance.new("UIStroke")
+      scrollStroke.Color = Color3.new(0, 0, 0)
+      scrollStroke.Thickness = 2
+      scrollStroke.Parent = scrollFrame
+      scrollFrames[categoryName] = scrollFrame
+  end
+  local selectedModels = {}
+-- SelectableModelButtons
+  local function createModelButton(modelName, parentFrame)
+      local btn = Instance.new("TextButton")
+      btn.Size = UDim2.new(0, 100, 0, 30)
+      btn.Text = modelName
+      btn.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
+      btn.BorderSizePixel = 1
+      btn.TextScaled = true 
+      btn.TextWrapped = true 
+      btn.TextColor3 = Color3.new(0, 0, 0)
+      btn.Parent = parentFrame
+      local isSelected = false
+      btn.MouseButton1Click:Connect(function()
+          isSelected = not isSelected
+          if isSelected then
+              btn.BackgroundColor3 = Color3.new(0.4, 0.8, 0.4)
+              selectedModels[modelName] = true
+          else
+              btn.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
+              selectedModels[modelName] = nil
+          end
+      end)
+  end
+  for _, modelsList in pairs(categories) do
+      table.sort(modelsList, function(a, b) return a.Name < b.Name end)
+      local categoryName = nil
+      for key, list in pairs(categories) do
+          if list == modelsList then
+              categoryName = key
+              break
+          end
+      end
+      local parentFrame = scrollFrames[categoryName]
+      for _, model in ipairs(modelsList) do
+          createModelButton(model.Name, parentFrame)
+      end
+    end
+-- Amount label and button 
+  local amountLabel = Instance.new("TextLabel")
+  amountLabel.Size = UDim2.new(0, 80, 0, 20)
+  amountLabel.Position = UDim2.new(0, 10, 0, startY + #containerNames * 140)
+  amountLabel.Text = "Amount:"
+  amountLabel.Parent = SpawnMobMenu
+  amountLabel.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+  amountLabel.TextColor3 = Color3.new(1, 1, 1)
+  local amountBox = Instance.new("TextBox")
+  amountBox.Size = UDim2.new(0, 100, 0, 25)
+  amountBox.Position = UDim2.new(0, 100, 0, startY + #containerNames * 140)
+  amountBox.Text = "1"
+  amountBox.BackgroundColor3 = Color3.new(1, 1, 1)
+  amountBox.Parent = SpawnMobMenu
+  local sendButton = Instance.new("TextButton")
+  sendButton.Size = UDim2.new(0, 100, 0, 30)
+  sendButton.Position = UDim2.new(0, 210, 0, startY + #containerNames * 140)
+  sendButton.Text = "Send"
+  sendButton.Parent = SpawnMobMenu
+  sendButton.MouseButton1Click:Connect(function()
+      local amountText = amountBox.Text
+      local amount = tonumber(amountText)
+      if not amount then
+          warn("Invalid amount")
+          return
+      end
+      local selected = {}
+      for modelName, _ in pairs(selectedModels) do
+          table.insert(selected, modelName)
+      end
+      if #selected == 0 then
+          warn("No models selected")
+          return
+      end
+      for n = 1, amount do
+          for _, modelName in ipairs(selected) do
+              local args = {
+                  [1] = "spawnmob " .. modelName,
+                  [2] = {}
+              }
+              game:GetService("ReplicatedStorage"):WaitForChild("CmdrClient"):WaitForChild("CmdrFunction"):InvokeServer(unpack(args))
+          end
+      end
+  end)
+-- Clearall button
+  local clearButton = Instance.new("TextButton")
+  clearButton.Size = UDim2.new(0, 100, 0, 30)
+  clearButton.Position = UDim2.new(0, 320, 0, startY + #containerNames * 140)
+  clearButton.Text = "Clear all"
+  clearButton.Parent = SpawnMobMenu
+  clearButton.MouseButton1Click:Connect(function()
+      local args = {
+          [1] = "clearall",
+          [2] = {}
+      }
+      game:GetService("ReplicatedStorage"):WaitForChild("CmdrClient"):WaitForChild("CmdrFunction"):InvokeServer(unpack(args))
+  end)
