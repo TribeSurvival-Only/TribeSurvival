@@ -1,6 +1,8 @@
 -- You can execute loadstring(game:HttpGet("https://raw.githubusercontent.com/TribeSurvival-Only/TribeSurvival/refs/heads/main/WeaponUpgraderInformation(Mod%20for%20Tribe%20Survival%20Roblox)"))()
 -- workspace
 -- Created 28.06.2026 Moskow Time ~01:20-04.30
+-- (Update 0.02 28.06.2026) Moskow Time 21:36-23:39
+-- Remove Bugs
 -- (Update 0.01 28.06.2026) Moskow Time 21:13-23:32
 -- Added closing - opening the menu
 -- Redesigned the weapon display function, now the first and second weapons are displayed in different parts
@@ -221,7 +223,11 @@
                     SD.Visible = Stool:GetAttribute("DrainingEnchant") or false
                     SF.Visible = Stool:GetAttribute("FrostEnchant") or false
                     SS.Visible = Stool:GetAttribute("SearingEnchant") or false
-                    SWN.Text = Stool.Name
+                    if Stool then
+                        SWN.Text = Stool.Name
+                    else
+                        SWN.Text = "you need to get the second weapon"
+                    end
                     SHD.TextColor3 = Color3.new(1, 1, 1)
                     SHD.Text = "damage to"
                     SHD.TextSize = 14
