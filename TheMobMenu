@@ -1,3 +1,4 @@
+-- You can execute loadstring(game:HttpGet("https://raw.githubusercontent.com/TribeSurvival-Only/TribeSurvival/refs/heads/main/TheMobMenu"))()
 -- workspace
   local Player = game.Players.LocalPlayer
   local CratesGui = Player.PlayerGui.MainUI.Crates
